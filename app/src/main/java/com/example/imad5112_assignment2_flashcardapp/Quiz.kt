@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import kotlin.system.exitProcess
 
 class Quiz : AppCompatActivity() {
 
@@ -47,8 +48,15 @@ class Quiz : AppCompatActivity() {
         falseBt = findViewById(R.id.btnFalse)
         answerPrompt = findViewById(R.id.tvAnswerPrompt)
 
+       val exitBt = findViewById<Button>(R.id.btnExit)
+
         quizQuestionsHeader.text = questionsHeaderArray[intIndex]
         quizQuestions.text = questionsArray[intIndex]
+
+        exitBt.setOnClickListener {
+            finishAffinity()
+            exitProcess(0)
+        }
 
         nextBt.setOnClickListener {
             while (intIndex < 5) {
