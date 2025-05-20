@@ -1,5 +1,6 @@
 package com.example.imad5112_assignment2_flashcardapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -23,6 +24,7 @@ class Quiz : AppCompatActivity() {
         "Japan launched an attack on Pearl Harbor (USA) in 1941.",
         "The Soviet Union was an Axis Power in WWII.",
         "WWII ended on the 7th of Sept. 1945.",
+        "",
         ""
     )
     private val questionsHeaderArray = arrayOf<String>(
@@ -31,6 +33,7 @@ class Quiz : AppCompatActivity() {
         "Question 3:",
         "Question 4:",
         "Question 5:",
+        "",
         ""
     )
     private val answersArray = booleanArrayOf(true, false, true, false, false)
@@ -59,7 +62,7 @@ class Quiz : AppCompatActivity() {
         }
 
         nextBt.setOnClickListener {
-            while (intIndex < 5) {
+            while (intIndex < 6) {
                 intIndex++
                 quizQuestionsHeader.text = questionsHeaderArray[intIndex]
                 quizQuestions.text = questionsArray[intIndex]
@@ -67,9 +70,9 @@ class Quiz : AppCompatActivity() {
             }
             answerPrompt.text = ""
             if (intIndex == 5) {
+                nextBt.text = "Review Questions"
                 quizQuestionsHeader.text = "Your Result:"
-                quizQuestions.text =
-                    "You got " + userScore + " answers correct, out of a possible 5."
+                quizQuestions.text = "You got " + userScore + " answers correct, out of a possible 5."
                 if (userScore <= 3) {
                     answerPrompt.text = "You can do better than that! Keep studying!"
                 } else {
@@ -87,6 +90,15 @@ class Quiz : AppCompatActivity() {
                         }
                     }
                 }
+            }
+            while (intIndex == 6) {
+                val intent = Intent(this, ReviewMode::class.java)
+                intent.putExtra("The user's score", userScore)
+                intent.putExtra("Array holding questions", questionsArray)
+                intent.putExtra("Array holding headers", questionsHeaderArray)
+                intent.putExtra("Array holding answers", answersArray)
+                startActivity(intent)
+                break
             }
         }
 
@@ -113,8 +125,6 @@ class Quiz : AppCompatActivity() {
                     answerPrompt.text = "Incorrect! Sorry, that's not the right answer..."
                 }
             }
-
-
         }
     }
 }
