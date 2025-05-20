@@ -33,7 +33,7 @@ class ReviewMode : AppCompatActivity() {
         revScore = findViewById(R.id.tvScore)
 
 
-        val userScore = intent.getIntExtra("The user's score", 0)
+        val userScore = intent.getIntExtra("The user's score", 0) //receiving arrays and variables from 2nd screen
         val questionsArray = intent.getStringArrayExtra("Array holding questions")
         val questionsHeaderArray = intent.getStringArrayExtra("Array holding headers")
         val answersArray = intent.getBooleanArrayExtra("Array holding answers")
@@ -41,8 +41,8 @@ class ReviewMode : AppCompatActivity() {
         val revExitBt = findViewById<Button>(R.id.btnExitRevMode)
 
         revScore.text = "Your score was: " + userScore + "/5"
-        revQuestionsHeader.text = questionsHeaderArray!![intIndex]
-        revQuestions.text = questionsArray!![intIndex]
+        revQuestionsHeader.text = questionsHeaderArray!![intIndex] // displaying the questions and answers from the previous screen
+        revQuestions.text = questionsArray!![intIndex] // making these arrays non-nullable (learnt on page 66 of module manual)
         revAnswerPrompt.text = "This answer was " + answersArray!![intIndex] + "."
 
         revExitBt.setOnClickListener {
@@ -50,9 +50,9 @@ class ReviewMode : AppCompatActivity() {
             exitProcess(0)
         }
 
-        revNextbt.setOnClickListener {
+        revNextbt.setOnClickListener { // allowing users to go to the next question at will
             while (intIndex < 5) {
-                if (intIndex == 4) {
+                if (intIndex == 4) { // preventing crashes when this button is attempting to leave the array
                     break
                 } else {
                     intIndex++

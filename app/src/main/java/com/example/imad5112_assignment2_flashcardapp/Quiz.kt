@@ -10,7 +10,7 @@ import kotlin.system.exitProcess
 
 class Quiz : AppCompatActivity() {
 
-    private lateinit var quizQuestions: TextView
+    private lateinit var quizQuestions: TextView    // initializing most of the variables
     private lateinit var quizQuestionsHeader: TextView
     private lateinit var nextBt: Button
     private lateinit var trueBt: Button
@@ -18,7 +18,7 @@ class Quiz : AppCompatActivity() {
     private lateinit var answerPrompt: TextView
     private var userScore = 0
 
-    private val questionsArray = arrayOf<String>(
+    private val questionsArray = arrayOf<String>( // creating an to display questions in a while loop
         "WWII started on the 1st of Sept. 1939.",
         "Japan was an Allied Power in WWII.",
         "Japan launched an attack on Pearl Harbor (USA) in 1941.",
@@ -27,7 +27,7 @@ class Quiz : AppCompatActivity() {
         "",
         ""
     )
-    private val questionsHeaderArray = arrayOf<String>(
+    private val questionsHeaderArray = arrayOf<String>( // same as above, just the headers for questions
         "Question 1:",
         "Question 2:",
         "Question 3:",
@@ -37,7 +37,7 @@ class Quiz : AppCompatActivity() {
         ""
     )
     private val answersArray = booleanArrayOf(true, false, true, false, false)
-    private var intIndex = 0
+    private var intIndex = 0 // creating an array to match answers to the questions, setting loop variable to 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,21 +56,21 @@ class Quiz : AppCompatActivity() {
         quizQuestionsHeader.text = questionsHeaderArray[intIndex]
         quizQuestions.text = questionsArray[intIndex]
 
-        exitBt.setOnClickListener {
+        exitBt.setOnClickListener { // exit button functionality
             finishAffinity()
             exitProcess(0)
         }
 
-        nextBt.setOnClickListener {
-            while (intIndex < 6) {
-                intIndex++
+        nextBt.setOnClickListener { // button uses while loop to go through the questions
+            while (intIndex < 6) { // "break" is being used to prevent an infinite loop
+                intIndex++ // (learnt about "break" on pg. 68 of module manual)
                 quizQuestionsHeader.text = questionsHeaderArray[intIndex]
                 quizQuestions.text = questionsArray[intIndex]
                 break
             }
-            answerPrompt.text = ""
+            answerPrompt.text = "" // resets the "correct/incorrect" prompt when user goes to next question
             if (intIndex == 5) {
-                nextBt.text = "Review Questions"
+                nextBt.text = "Review Questions" // changes button to allow users to enter review mode if they wish
                 quizQuestionsHeader.text = "Your Result:"
                 quizQuestions.text = "You got " + userScore + " answers correct, out of a possible 5."
                 if (userScore <= 3) {
@@ -92,7 +92,7 @@ class Quiz : AppCompatActivity() {
                 }
             }
             while (intIndex == 6) {
-                val intent = Intent(this, ReviewMode::class.java)
+                val intent = Intent(this, ReviewMode::class.java) // once test is complete, sends arrays and score variable to the review mode screen
                 intent.putExtra("The user's score", userScore)
                 intent.putExtra("Array holding questions", questionsArray)
                 intent.putExtra("Array holding headers", questionsHeaderArray)
@@ -102,13 +102,13 @@ class Quiz : AppCompatActivity() {
             }
         }
 
-        trueBt.setOnClickListener {
+        trueBt.setOnClickListener { // checks if this button matches the answer of the question
             if (intIndex == 5) {
                 answerPrompt.text = "What are you doing? The test is over!"
             } else {
                 if (answersArray[intIndex] == true) {
                     answerPrompt.text = "Correct! You got the right answer!"
-                    userScore += 1
+                    userScore += 1 // adds a point if user answered correctly
                 } else {
                     answerPrompt.text = "Incorrect! Sorry, that's not the right answer..."
                 }
